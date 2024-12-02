@@ -10,9 +10,6 @@ const CSV_COL_DELIMITER: &str = ",";
 const FATAL_STR: &str = "FATAL";
 
 // constants used to export scorecard to CSV
-const CRITERION_STR: &str = "Criterion";
-const SELECTION_STR: &str = "Selection";
-const COMMENTS_STR: &str = "Comments";
 const SCORE_STR: &str = "Percent Score";
 
 /// Represents the scoring schema associated with a `CriterionOption`.
@@ -291,9 +288,6 @@ impl Review {
         // push the percentage score to the data
         let percent_score_string = self.percent_score_string();
         data.push(vec![SCORE_STR, percent_score_string.as_str(), ""]);
-
-        // push a header row to the data
-        data.push(vec![CRITERION_STR, SELECTION_STR, COMMENTS_STR]);
 
         // iterate through criteria in the review
         for criterion in &self.criteria {
