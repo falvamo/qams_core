@@ -12,7 +12,8 @@ const FATAL_STR: &str = "FATAL";
 // constants used to export scorecard to CSV
 const CRITERION_STR: &str = "Criterion";
 const SELECTION_STR: &str = "Selection";
-const COMMENTS_STR: &str = "COMMENTS";
+const COMMENTS_STR: &str = "Comments";
+const SCORE_STR: &str = "Percent Score";
 
 /// Represents the scoring schema associated with a `CriterionOption`.
 #[derive(Debug)]
@@ -211,6 +212,15 @@ impl Review {
         total_points
     }
 
+    /// Compute the percent score for this review
+    pub fn percent_score(&self) -> f32 {
+        100 as f32 * self.total_points() as f32 / self.max_points() as f32
+    }
+
+    pub fn percent_score_string(&self) -> String {
+        format!("{:.2}%", self.percent_score())
+    }
+
     /// Create a review from a CSV string.
     pub fn from_csv(csv: &str) -> Review {
         // remove trailing newline characters from the CSV.
@@ -280,6 +290,10 @@ impl Review {
 
         // push a header row to the data
         data.push(vec![CRITERION_STR, SELECTION_STR, COMMENTS_STR]);
+
+        // push the percentage score to the data
+        let percent_score_string = self.percent_score_string();
+        data.push(vec![SCORE_STR, percent_score_string.as_str(), ""]);
 
         // iterate through criteria in the review
         for criterion in &self.criteria {
