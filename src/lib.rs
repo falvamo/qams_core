@@ -213,6 +213,9 @@ impl Review {
 
     /// Create a review from a CSV string.
     pub fn from_csv(csv: &str) -> Review {
+        // remove trailing newline characters from the CSV.
+        let csv = csv.trim();
+
         // split the csv input into lines
         let lines: Vec<&str> = csv.split(CSV_ROW_DELIMITER).collect();
 
