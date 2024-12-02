@@ -288,12 +288,12 @@ impl Review {
         // create an empty mutable vector to store the data
         let mut data: Vec<Vec<&str>> = Vec::new();
 
-        // push a header row to the data
-        data.push(vec![CRITERION_STR, SELECTION_STR, COMMENTS_STR]);
-
         // push the percentage score to the data
         let percent_score_string = self.percent_score_string();
         data.push(vec![SCORE_STR, percent_score_string.as_str(), ""]);
+
+        // push a header row to the data
+        data.push(vec![CRITERION_STR, SELECTION_STR, COMMENTS_STR]);
 
         // iterate through criteria in the review
         for criterion in &self.criteria {
